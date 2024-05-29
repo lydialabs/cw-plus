@@ -28,7 +28,7 @@ pub const ICS20_ORDERING: IbcOrder = IbcOrder::Unordered;
 /// This is compatible with the JSON serialization
 #[derive(Serialize, Deserialize, Clone, PartialEq, Eq, JsonSchema, Debug, Default)]
 pub struct Ics20Packet {
-    /// amount of tokens to transfer is encoded as a string, but limited to u64 max
+    /// amount of tokens to transfer is encoded as a string
     pub amount: Uint128,
     /// the token denomination to be transferred
     pub denom: String,
@@ -54,14 +54,6 @@ impl Ics20Packet {
 
     pub fn with_memo(self, memo: Option<String>) -> Self {
         Ics20Packet { memo, ..self }
-    }
-
-    pub fn validate(&self) -> Result<(), ContractError> {
-        if self.amount.u128() > (u64::MAX as u128) {
-            Err(ContractError::AmountOverflow {})
-        } else {
-            Ok(())
-        }
     }
 }
 

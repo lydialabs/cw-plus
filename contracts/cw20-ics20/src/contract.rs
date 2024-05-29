@@ -137,7 +137,6 @@ pub fn execute_transfer(
         &msg.remote_address,
     )
     .with_memo(msg.memo);
-    packet.validate()?;
 
     // Update the balance now (optimistically) like ibctransfer modules.
     // In on_packet_failure (ack with error message or a timeout), we reduce the balance appropriately.
